@@ -45,6 +45,16 @@ function App() {
     imageref5,
     imageref6,
   ];
+  const checkHalfImage = (e) => {
+    const slideInAt = window.scrollY + window.innerHeight - e.target.height / 2;
+    const halfShown = slideInAt > e.target.offsetTop;
+    halfShown
+      ? e.target.classList.add("active")
+      : e.target.classList.remove("active");
+
+    console.log("checked!!");
+  };
+
   /**
    * If the image is half shown, and not scrolled past, add the class "active" to the image
    */
@@ -90,6 +100,7 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref}
           className="align-left slide-in"
           src={img}
@@ -163,6 +174,7 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref2}
           className="align-left slide-in"
           src={img2}
@@ -224,6 +236,7 @@ function App() {
           sodales nulla erat et ex.
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref3}
           className="align-left slide-in"
           src={img3}
@@ -247,6 +260,7 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref4}
           className="align-right slide-in"
           src={img}
@@ -303,6 +317,7 @@ function App() {
           tristique vehicula elit, nec porta tellus rutrum ut.
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref5}
           className="align-right slide-in"
           src={img4}
@@ -334,6 +349,7 @@ function App() {
           tristique vehicula elit, nec porta tellus rutrum ut.
         </p>{" "}
         <img
+          onLoad={checkHalfImage}
           ref={imageref6}
           className="align-left slide-in"
           src={img1}
