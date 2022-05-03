@@ -4,64 +4,73 @@ import img1 from "./components/es6img1.jpg";
 import img2 from "./components/reactimg1.jpg";
 import img3 from "./components/jsimg3.jpg";
 import img4 from "./components/jsimg2.jpg";
-
+import debounce from "lodash.debounce";
 import "./App.css";
-
-const bar = ["purple1", "purple2", "purple3", "purple4", "purple5"];
-
-/**
- * We're mapping over the array of strings, and for each string, we're creating a nav element with the
- * className of the string
- * @returns An array of nav elements
- */
-const NaviBar = () => {
-  const route = bar.map((bar, i) => (
-    <nav className={bar} key={i}>
-      {" "}
-      NAV {i}{" "}
-    </nav>
-  ));
-  return route;
-};
-
-/* The above code is a debounce function. It is used to limit the rate at which a function can fire. */
-function debounce(func, wait = 6, immediate = true) {
-  var timeout;
-  return function () {
-    var context = this,
-      args = arguments;
-    var later = function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-}
-
-const images = document.querySelectorAll(".slide-in");
-
-/**
- * If the image is half shown, and not scrolled past, add the class "active" to the image
- */
-const slide = () => {
-  images.forEach((e) => {
-    const slideInAt = window.scrollY + window.innerHeight - e.height / 2;
-    const imageBot = e.offsetTop + e.height;
-    const halfShown = slideInAt > e.offsetTop;
-    const notScrolledPast = window.scrollY < imageBot;
-
-    halfShown && notScrolledPast
-      ? e.classList.add("active")
-      : e.classList.remove("active");
-  });
-};
-
-window.addEventListener("scroll", debounce(slide));
+import { useRef } from "react";
+import React from "react";
 
 function App() {
+  const bar = ["purple1", "purple2", "purple3", "purple4", "purple5"];
+
+  /**
+   * We're mapping over the array of strings, and for each string, we're creating a nav element with the
+   * className of the string
+   * @returns An array of nav elements
+   */
+  const NaviBar = () => {
+    const route = bar.map((bar, i) => (
+      <nav className={bar} key={i}>
+        {" "}
+        NAV {i}{" "}
+      </nav>
+    ));
+    return route;
+  };
+
+  /* The above code is a debounce function. It is used to limit the rate at which a function can fire. */
+
+  const imageref = useRef();
+  const imageref2 = useRef();
+  const imageref3 = useRef();
+  const imageref4 = useRef();
+  const imageref5 = useRef();
+  const imageref6 = useRef();
+
+  const images = [
+    imageref,
+    imageref2,
+    imageref3,
+    imageref4,
+    imageref5,
+    imageref5,
+    imageref6,
+  ];
+  /**
+   * If the image is half shown, and not scrolled past, add the class "active" to the image
+   */
+
+  const slide = () => {
+    images.map((e) => {
+      const slideInAt =
+        window.scrollY + window.innerHeight - e.current.height / 2;
+      const imageBot = e.current.offsetTop + e.current.height;
+      const halfShown = slideInAt > e.current.offsetTop;
+      const notScrolledPast = window.scrollY < imageBot;
+
+      halfShown && notScrolledPast
+        ? e.current.classList.add("active")
+        : e.current.classList.remove("active");
+    });
+  };
+  React.useEffect(() => {
+    window.addEventListener(
+      "scroll",
+      debounce(function () {
+        slide();
+      }, 20)
+    );
+  });
+
   return (
     <div className="App">
       <div id="left">
@@ -81,9 +90,10 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          ref={imageref}
           className="align-left slide-in"
           src={img}
-          alt="img"
+          alt="img1"
           width="200"
           height="200"
         ></img>{" "}
@@ -153,9 +163,10 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          ref={imageref2}
           className="align-left slide-in"
           src={img2}
-          alt="img"
+          alt="img2"
           width="400"
           height="200"
         ></img>{" "}
@@ -213,9 +224,10 @@ function App() {
           sodales nulla erat et ex.
         </p>{" "}
         <img
+          ref={imageref3}
           className="align-left slide-in"
           src={img3}
-          alt="img"
+          alt="img3"
           width="200"
           height="200"
         ></img>{" "}
@@ -235,9 +247,10 @@ function App() {
           turpis est, tincidunt sed facilisis non, ultrices sed arcu.{" "}
         </p>{" "}
         <img
+          ref={imageref4}
           className="align-right slide-in"
           src={img}
-          alt="img"
+          alt="img4"
           width="200"
           height="200"
         ></img>{" "}
@@ -290,10 +303,11 @@ function App() {
           tristique vehicula elit, nec porta tellus rutrum ut.
         </p>{" "}
         <img
+          ref={imageref5}
           className="align-right slide-in"
           src={img4}
-          alt="img"
-          width="200"
+          alt="img5"
+          width="300"
           height="200"
         ></img>{" "}
         <p>
@@ -320,10 +334,11 @@ function App() {
           tristique vehicula elit, nec porta tellus rutrum ut.
         </p>{" "}
         <img
+          ref={imageref6}
           className="align-left slide-in"
           src={img1}
-          alt="img"
-          width="200"
+          alt="img6"
+          width="250"
           height="200"
         ></img>{" "}
       </div>
